@@ -16,15 +16,17 @@ body {
   padding-top: 60px;
 }
 
-.sidebar a {
+.sidebar .nav-link {
   color: white;
   padding: 15px 20px;
   display: block;
   text-decoration: none;
 }
 
-.sidebar a:hover {
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
   background-color: #495057;
+  color: white;
 }
 
 .content {
@@ -53,4 +55,14 @@ body {
 }
 .bg-gradient-warning {
   background: linear-gradient(135deg, #ffc107, #f5b942);
+}
+
+.submenu {
+  display: none;
+  flex-direction: column;
+  padding-left: 1rem;
+}
+
+.submenu.show {
+  display: flex;
 }
