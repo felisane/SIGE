@@ -36,6 +36,10 @@ function highlightActiveSidebarLink() {
     if (linkHref && linkHref === currentPage) {
       link.classList.add('active');
 
+      // Update browser tab title based on active link text
+      const pageName = link.textContent.trim();
+      document.title = `${pageName} | SIGE`;
+
       // If it's a submenu link, open the submenu
       if (link.parentElement.id === "submenuClientes") {
         document.getElementById("submenuClientes").classList.add("show");
