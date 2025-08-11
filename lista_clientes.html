@@ -44,7 +44,7 @@
               <td>2025-08-01</td>
               <td>
                 <a href="editar.html" class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil-square"></i></a>
-                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-outline-danger" onclick="excluirCliente(1)"><i class="bi bi-trash"></i></button>
                 <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#historicoModal">
                   <i class="bi bi-clock-history"></i>
                 </button>
@@ -58,7 +58,7 @@
               <td>2025-07-25</td>
               <td>
                 <a href="editar.html" class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil-square"></i></a>
-                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-outline-danger" onclick="excluirCliente(2)"><i class="bi bi-trash"></i></button>
                 <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#historicoModal">
                   <i class="bi bi-clock-history"></i>
                 </button>
@@ -72,7 +72,7 @@
               <td>2025-07-10</td>
               <td>
                 <a href="editar.html" class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil-square"></i></a>
-                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-outline-danger" onclick="excluirCliente(3)"><i class="bi bi-trash"></i></button>
                 <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#historicoModal">
                   <i class="bi bi-clock-history"></i>
                 </button>
@@ -140,6 +140,19 @@
         });
       }
     });
+
+    function excluirCliente(id) {
+      if (confirm('Tem certeza que deseja excluir este cliente?')) {
+        const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+        const atualizados = clientes.filter(c => c.id !== id);
+        localStorage.setItem('clientes', JSON.stringify(atualizados));
+
+        const table = $('#tabelaClientes').DataTable();
+        table.rows(function (idx, data, node) {
+          return data[0] == id;
+        }).remove().draw();
+      }
+    }
   </script>
   <script src="layout.js"></script>
 </body>
