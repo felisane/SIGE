@@ -1,6 +1,6 @@
 // layout.js
 // Dynamically loads sidebar.html and navbar.html into every page
-// Handles submenu toggling for the sidebar and highlights the active page
+// Handles loading of sidebar/navbar and highlights the active page
 
 function loadLayout() {
   // Fetch and inject sidebar.html content
@@ -21,10 +21,6 @@ function loadLayout() {
 
 document.addEventListener('DOMContentLoaded', loadLayout);
 
-function toggleSubmenu() {
-  document.getElementById("submenuClientes").classList.toggle("show");
-}
-
 // Highlight the sidebar link for the current page using Bootstrap's .active
 function highlightActiveSidebarLink() {
   // Get all nav-links inside the sidebar
@@ -40,9 +36,11 @@ function highlightActiveSidebarLink() {
       const pageName = link.textContent.trim();
       document.title = `${pageName} | SIGE`;
 
-      // If it's a submenu link, open the submenu
-      if (link.parentElement.id === "submenuClientes") {
-        document.getElementById("submenuClientes").classList.add("show");
+      // If it's inside a collapsed submenu, open it
+      const collapseParent = link.closest('.collapse');
+      if (collapseParent) {
+        const instance = bootstrap.Collapse.getOrCreateInstance(collapseParent, { toggle: false });
+        instance.show();
       }
     }
   });
