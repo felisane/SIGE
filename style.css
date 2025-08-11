@@ -33,3 +33,21 @@ body {
 .bg-gradient-warning {
   background: linear-gradient(135deg, #ffc107, #f5b942);
 }
+
+/* Acessibilidade: foco visível e contraste */
+.btn:focus,
+.btn:focus-visible {
+  outline: 2px solid #212529;
+  outline-offset: 2px;
+}
+
+.btn-outline-info {
+  color: #055160;
+  border-color: #055160;
+}
+
+.btn-outline-info:hover,
+.btn-outline-info:focus {
+  background-color: #055160;
+  color: #fff;
+}
