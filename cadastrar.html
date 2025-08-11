@@ -17,22 +17,31 @@
 </head>
 <body class="bg-light text-dark">
 
+  <!-- Contêiner onde a barra lateral é carregada -->
   <div id="sidebar-container"></div>
+  <!-- Área principal do conteúdo -->
   <div class="content">
+    <!-- Contêiner para a navbar -->
     <div id="navbar-container"></div>
+    <!-- Área fluida para o formulário -->
     <div class="container-fluid">
       <h4 class="mb-4">Cadastrar Novo Cliente</h4>
+      <!-- Cartão que contém o formulário de cadastro -->
       <div class="card shadow-sm">
+        <!-- Corpo do cartão com campos do formulário -->
         <div class="card-body">
           <form id="clienteForm">
+            <!-- Campo para o nome do cliente -->
             <div class="mb-3">
               <label for="nome" class="form-label">Nome completo</label>
               <input type="text" class="form-control" id="nome" placeholder="Ex: João da Silva" required autocomplete="off">
             </div>
+            <!-- Campo para o endereço do cliente -->
             <div class="mb-3">
               <label for="endereco" class="form-label">Endereço</label>
               <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Rua, Bairro, Cidade" required autocomplete="off">
             </div>
+            <!-- Campo para o telefone do cliente -->
             <div class="mb-3">
               <label for="telefone" class="form-label">Telefone</label>
               <input type="tel" class="form-control" id="telefone" placeholder="Ex: 923 000 000" required autocomplete="off">
@@ -45,16 +54,22 @@
   </div>
 
   <!-- Toast Feedback -->
+  <!-- Toast de sucesso -->
   <div id="toast-success" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display:none;">
+    <!-- Estrutura flexível do toast de sucesso -->
     <div class="d-flex">
+      <!-- Mensagem de sucesso -->
       <div class="toast-body">
         Cliente cadastrado com sucesso!
       </div>
       <button type="button" class="btn-close btn-close-white me-2 m-auto" onclick="hideToast('toast-success')"></button>
     </div>
   </div>
+  <!-- Toast de erro -->
   <div id="toast-error" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" style="display:none;">
+    <!-- Estrutura flexível do toast de erro -->
     <div class="d-flex">
+      <!-- Mensagem de erro -->
       <div class="toast-body">
         Ocorreu um erro ao cadastrar o cliente.
       </div>

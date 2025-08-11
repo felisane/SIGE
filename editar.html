@@ -18,11 +18,13 @@
 
 
   <!-- Sidebar -->
+  <!-- Barra lateral com menu de navegação -->
   <div class="sidebar">
     <h4 class="text-center">SIGE</h4>
     <hr>
     <a href="index.html"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
     <a href="lista_clientes.html" class="toggle-submenu" onclick="toggleSubmenu()"> <i class="bi bi-people-fill me-2"></i>Clientes</a>
+    <!-- Submenu de opções para clientes -->
     <div class="submenu show" id="submenuClientes">
       <a href="lista_clientes.html" class="active"><i class="bi bi-list-ul me-2"></i>Lista de Clientes</a>
       <a href="cadastrar.html"><i class="bi bi-plus-circle me-2"></i>Cadastrar Cliente</a>
@@ -35,12 +37,15 @@
   </div>
 
 
+<!-- Área principal do conteúdo -->
 <div class="content">
   
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4 mb-4">
+    <!-- Container da navbar com alinhamento -->
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <span class="navbar-brand mb-0 h1">Painel de Controle</span>
+      <!-- Área da navbar com saudação do usuário -->
       <div class="d-flex align-items-center">
         <i class="bi bi-person-circle fs-3 me-2 text-primary"></i>
         <span>Olá, Administrador</span>
@@ -51,18 +56,23 @@
 
   <div class="container-fluid">
     <h4 class="mb-4">Editar Cliente</h4>
+    <!-- Cartão com formulário de edição -->
     <div class="card shadow-sm">
+      <!-- Corpo do cartão com campos de edição -->
       <div class="card-body">
         <form>
+          <!-- Campo para o nome do cliente -->
           <div class="mb-3">
             <label for="nome" class="form-label">Nome completo</label>
             <input type="text" class="form-control" id="nome" value="" required autocomplete="off">
           </div>
-    <div class="mb-3">
-      <label for="endereco" class="form-label">Endereço</label>
-      <input type="text" class="form-control" id="endereco" name="endereco" value="" required autocomplete="off">
-    </div>
+          <!-- Campo para o endereço do cliente -->
+          <div class="mb-3">
+            <label for="endereco" class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="endereco" name="endereco" value="" required autocomplete="off">
+          </div>
 
+          <!-- Campo para o telefone do cliente -->
           <div class="mb-3">
             <label for="telefone" class="form-label">Telefone</label>
             <input type="tel" class="form-control" id="telefone" value="" required autocomplete="off">
