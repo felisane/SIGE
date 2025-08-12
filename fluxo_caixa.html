@@ -26,7 +26,26 @@
       <div class="card mb-4">
         <div class="card-body">
           <h5 class="card-title">Saldo Atual</h5>
-          <p class="card-text fs-4">Kz 115.000</p>
+          <p>Entradas: <span id="totalEntradas">Kz 0</span></p>
+          <p>Saídas: <span id="totalSaidas">Kz 0</span></p>
+          <p class="fw-bold">Saldo Atual: <span id="saldoAtual">Kz 0</span></p>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="filtroPeriodo" class="form-label">Filtrar por período:</label>
+        <select id="filtroPeriodo" class="form-select w-auto">
+          <option value="all">Todos</option>
+          <option value="day">Dia</option>
+          <option value="week">Semana</option>
+          <option value="month">Mês</option>
+        </select>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Comparativo de Entradas e Saídas</h5>
+          <canvas id="fluxoChart" height="100"></canvas>
         </div>
       </div>
 
@@ -76,15 +95,111 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     $(document).ready(function () {
-      $('#tabelaFluxo').DataTable({
+      const tabela = $('#tabelaFluxo').DataTable({
         dom: 'Bfrtip',
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
         language: {
           url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-PT.json'
         }
       });
+
+      function calcularTotais() {
+        let entradas = 0, saidas = 0;
+        tabela.rows({ filter: 'applied' }).every(function () {
+          const data = this.data();
+          const tipo = $('<div>').html(data[2]).text().trim();
+          const valor = parseFloat(data[3]);
+          if (tipo === 'Entrada') entradas += valor;
+          else if (tipo === 'Saída') saidas += valor;
+        });
+        $('#totalEntradas').text(`Kz ${entradas.toLocaleString()}`);
+        $('#totalSaidas').text(`Kz ${saidas.toLocaleString()}`);
+        $('#saldoAtual').text(`Kz ${(entradas - saidas).toLocaleString()}`);
+      }
+
+      function aplicarFiltro(periodo) {
+        $.fn.dataTable.ext.search = $.fn.dataTable.ext.search.filter(f => !f._periodoFilter);
+        if (periodo === 'all') return;
+        const now = new Date();
+        const startWeek = new Date(now);
+        startWeek.setDate(now.getDate() - now.getDay());
+        const endWeek = new Date(startWeek);
+        endWeek.setDate(startWeek.getDate() + 6);
+        const filterFunc = function (settings, data) {
+          const [d, m, y] = data[0].split('/').map(Number);
+          const rowDate = new Date(y, m - 1, d);
+          if (periodo === 'day') {
+            return rowDate.toDateString() === now.toDateString();
+          } else if (periodo === 'week') {
+            return rowDate >= startWeek && rowDate <= endWeek;
+          } else if (periodo === 'month') {
+            return rowDate.getMonth() === now.getMonth() && rowDate.getFullYear() === now.getFullYear();
+          }
+          return true;
+        };
+        filterFunc._periodoFilter = true;
+        $.fn.dataTable.ext.search.push(filterFunc);
+      }
+
+      const ctx = document.getElementById('fluxoChart').getContext('2d');
+      let fluxoChart;
+      function atualizarGrafico() {
+        const totals = { day: { e: 0, s: 0 }, week: { e: 0, s: 0 }, month: { e: 0, s: 0 } };
+        const now = new Date();
+        const startWeek = new Date(now);
+        startWeek.setDate(now.getDate() - now.getDay());
+        const endWeek = new Date(startWeek);
+        endWeek.setDate(startWeek.getDate() + 6);
+
+        tabela.rows().every(function () {
+          const data = this.data();
+          const tipo = $('<div>').html(data[2]).text().trim();
+          const valor = parseFloat(data[3]);
+          const [d, m, y] = data[0].split('/').map(Number);
+          const rowDate = new Date(y, m - 1, d);
+          const entrada = tipo === 'Entrada';
+          if (rowDate.toDateString() === now.toDateString()) {
+            entrada ? totals.day.e += valor : totals.day.s += valor;
+          }
+          if (rowDate >= startWeek && rowDate <= endWeek) {
+            entrada ? totals.week.e += valor : totals.week.s += valor;
+          }
+          if (rowDate.getMonth() === now.getMonth() && rowDate.getFullYear() === now.getFullYear()) {
+            entrada ? totals.month.e += valor : totals.month.s += valor;
+          }
+        });
+
+        const dataChart = {
+          labels: ['Dia', 'Semana', 'Mês'],
+          datasets: [
+            { label: 'Entradas', data: [totals.day.e, totals.week.e, totals.month.e], backgroundColor: 'rgba(75, 192, 192, 0.5)' },
+            { label: 'Saídas', data: [totals.day.s, totals.week.s, totals.month.s], backgroundColor: 'rgba(255, 99, 132, 0.5)' }
+          ]
+        };
+
+        if (fluxoChart) fluxoChart.destroy();
+        fluxoChart = new Chart(ctx, { type: 'bar', data: dataChart, options: { responsive: true } });
+      }
+
+      function atualizar() {
+        calcularTotais();
+        atualizarGrafico();
+      }
+
+      $('#filtroPeriodo').on('change', function () {
+        aplicarFiltro(this.value);
+        tabela.draw();
+        atualizar();
+      });
+
+      tabela.on('draw', function () {
+        calcularTotais();
+      });
+
+      atualizar();
     });
   </script>
   <script src="layout.js"></script>
