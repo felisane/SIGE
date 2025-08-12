@@ -8,7 +8,7 @@
 <div class="sidebar bg-dark text-white position-fixed top-0 bottom-0 d-flex flex-column p-3">
   <h4 class="text-center">SIGE</h4>
   <hr>
-  <nav class="nav nav-pills flex-column">
+  <nav id="sidebar-menu" class="nav nav-pills flex-column">
     <a href="index.html" class="nav-link text-white" id="dashboard-link">
       <i class="bi bi-speedometer2 me-2"></i>Dashboard
     </a>
@@ -17,7 +17,7 @@
       <i class="bi bi-caret-down"></i>
     </a>
     <!-- Submenu de clientes -->
-    <div class="collapse ms-3" id="submenuClientes">
+    <div class="collapse ms-3" id="submenuClientes" data-bs-parent="#sidebar-menu">
       <a href="lista_clientes.html" class="nav-link text-white">Lista de Clientes</a>
       <a href="cadastrar.html" class="nav-link text-white">Cadastrar Cliente</a>
     </div>

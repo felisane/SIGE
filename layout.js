@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', loadLayout);
 function highlightActiveSidebarLink() {
   // Get all nav-links inside the sidebar
   const links = document.querySelectorAll('.sidebar .nav-link[href]');
+  const collapses = document.querySelectorAll('.sidebar .collapse');
   // Determine current page name, defaulting to index.html for root paths
   let currentPage = window.location.pathname.split('/').pop();
   if (!currentPage) {
@@ -42,17 +43,20 @@ function highlightActiveSidebarLink() {
       const pageName = link.textContent.trim();
       document.title = `${pageName} | SIGE`;
 
-      // If it's inside a collapsed submenu, open it
       const collapseParent = link.closest('.collapse');
-      if (collapseParent) {
-        const instance = bootstrap.Collapse.getOrCreateInstance(collapseParent, { toggle: false });
-        instance.show();
-        // Also highlight the parent toggle link
-        const parentToggle = collapseParent.previousElementSibling;
-        if (parentToggle && parentToggle.classList.contains('nav-link')) {
-          parentToggle.classList.add('active');
+      collapses.forEach(collapse => {
+        const instance = bootstrap.Collapse.getOrCreateInstance(collapse, { toggle: false });
+        if (collapse === collapseParent) {
+          instance.show();
+          // Also highlight the parent toggle link
+          const parentToggle = collapse.previousElementSibling;
+          if (parentToggle && parentToggle.classList.contains('nav-link')) {
+            parentToggle.classList.add('active');
+          }
+        } else {
+          instance.hide();
         }
-      }
+      });
     }
   });
 }
