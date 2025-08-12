@@ -33,14 +33,16 @@
       </div>
 
       <div class="mb-3">
-        <label for="filtroPeriodo" class="form-label">Filtrar por período:</label>
-        <select id="filtroPeriodo" class="form-select w-auto">
-          <option value="all">Todos</option>
-          <option value="day">Dia</option>
-          <option value="week">Semana</option>
-          <option value="month">Mês</option>
-        </select>
-        <div id="subFiltro" class="mt-2" style="display:none;"></div>
+        <div class="input-group w-50">
+          <select id="filtroPeriodo" class="form-select">
+            <option value="all">Todos</option>
+            <option value="day">Dia</option>
+            <option value="week">Semana</option>
+            <option value="month">Mês</option>
+          </select>
+          <span id="subFiltro" class="d-none"></span>
+          <input type="search" id="tabelaFluxoSearch" class="form-control" placeholder="Pesquisar">
+        </div>
       </div>
 
       <div class="card mb-4">
@@ -116,12 +118,16 @@
   <script>
     $(document).ready(function () {
       const tabela = $('#tabelaFluxo').DataTable({
-        dom: 'Bfrtip',
+        dom: 'Brtip',
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
         language: {
           url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-PT.json'
         }
       });
+        $('#tabelaFluxoSearch').on('keyup', function () {
+          tabela.search(this.value).draw();
+        });
+
 
       function adicionarDadosFicticios() {
         const ano = 2025;
@@ -207,7 +213,8 @@
         if (periodo === 'day') html = '<input type="date" class="form-control w-auto" />';
         else if (periodo === 'week') html = '<input type="week" class="form-control w-auto" />';
         else if (periodo === 'month') html = '<input type="month" class="form-control w-auto" />';
-        $('#subFiltro').html(html).toggle(periodo !== 'all');
+        $('#subFiltro').html(html);
+        $('#subFiltro').toggleClass('d-none', periodo === 'all');
       }
 
       const ctx = document.getElementById('fluxoChart').getContext('2d');
