@@ -160,7 +160,7 @@
 
       function aplicarFiltro(periodo, valor) {
         $.fn.dataTable.ext.search = $.fn.dataTable.ext.search.filter(f => !f._periodoFilter);
-        if (periodo === 'all' || !valor) { tabela.draw(); return; }
+        if (periodo === 'all' || !valor) { tabela.draw(); calcularTotais(); return; }
         const filterFunc = function (settings, data) {
           const [d, m, y] = data[0].split('/').map(Number);
           const rowDate = new Date(y, m - 1, d);
@@ -182,6 +182,7 @@
         filterFunc._periodoFilter = true;
         $.fn.dataTable.ext.search.push(filterFunc);
         tabela.draw();
+        calcularTotais();
       }
 
       $('#filtroPeriodo').on('change', function () {
