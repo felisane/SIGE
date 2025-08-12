@@ -106,6 +106,25 @@
         }
       });
 
+      function adicionarDadosFicticios() {
+        const ano = 2025;
+        for (let mes = 0; mes < 12; mes++) {
+          const entradasMes = mes === 0 ? 9 : 8;
+          for (let i = 0; i < entradasMes; i++) {
+            const dia = (i % 28) + 1;
+            const data = `${String(dia).padStart(2, '0')}/${String(mes + 1).padStart(2, '0')}/${ano}`;
+            const entrada = Math.random() < 0.5;
+            const descricao = entrada ? `Venda ${mes + 1}-${i + 1}` : `Despesa ${mes + 1}-${i + 1}`;
+            const valor = Math.floor(Math.random() * 19000) + 1000;
+            const tipoHtml = `<span class="badge ${entrada ? 'bg-success' : 'bg-danger'}">${entrada ? 'Entrada' : 'Saída'}</span>`;
+            tabela.row.add([data, descricao, tipoHtml, valor]);
+          }
+        }
+        tabela.draw();
+      }
+
+      adicionarDadosFicticios();
+
       function calcularTotais() {
         let entradas = 0, saidas = 0;
         tabela.rows({ filter: 'applied' }).every(function () {
