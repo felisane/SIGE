@@ -30,6 +30,7 @@
                 <th>Categoria</th>
                 <th>Preço</th>
                 <th>Estoque</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -39,6 +40,11 @@
                 <td>Lubrificantes</td>
                 <td>Kz 8.000</td>
                 <td>20</td>
+                <td>
+                  <button class="btn btn-sm btn-primary me-1" onclick="window.location.href='editar_produto.html'"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#historyModal"><i class="bi bi-clock-history"></i></button>
+                </td>
               </tr>
               <tr>
                 <td>2</td>
@@ -46,6 +52,11 @@
                 <td>Filtros</td>
                 <td>Kz 2.500</td>
                 <td>35</td>
+                <td>
+                  <button class="btn btn-sm btn-primary me-1" onclick="window.location.href='editar_produto.html'"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#historyModal"><i class="bi bi-clock-history"></i></button>
+                </td>
               </tr>
               <tr>
                 <td>3</td>
@@ -53,6 +64,11 @@
                 <td>Freios</td>
                 <td>Kz 12.000</td>
                 <td>15</td>
+                <td>
+                  <button class="btn btn-sm btn-primary me-1" onclick="window.location.href='editar_produto.html'"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#historyModal"><i class="bi bi-clock-history"></i></button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -61,6 +77,46 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- Modal de confirmação de exclusão -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza que deseja apagar este produto?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger">Apagar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de histórico do produto -->
+  <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="historyLabel">Histórico do Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item">01/01/2024 - Produto cadastrado.</li>
+            <li class="list-group-item">15/01/2024 - Estoque atualizado.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->
