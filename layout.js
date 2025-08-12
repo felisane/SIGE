@@ -25,7 +25,13 @@ document.addEventListener('DOMContentLoaded', loadLayout);
 function highlightActiveSidebarLink() {
   // Get all nav-links inside the sidebar
   const links = document.querySelectorAll('.sidebar .nav-link[href]');
-  const currentPage = location.pathname.split('/').pop();
+  // Determine current page name, defaulting to index.html for root paths
+  let currentPage = window.location.pathname.split('/').pop();
+  if (!currentPage) {
+    currentPage = 'index.html';
+  }
+  // Remove possible query strings or hashes from the page name
+  currentPage = currentPage.split('?')[0].split('#')[0];
 
   links.forEach(link => {
     const linkHref = link.getAttribute('href');
@@ -41,6 +47,11 @@ function highlightActiveSidebarLink() {
       if (collapseParent) {
         const instance = bootstrap.Collapse.getOrCreateInstance(collapseParent, { toggle: false });
         instance.show();
+        // Also highlight the parent toggle link
+        const parentToggle = collapseParent.previousElementSibling;
+        if (parentToggle && parentToggle.classList.contains('nav-link')) {
+          parentToggle.classList.add('active');
+        }
       }
     }
   });
