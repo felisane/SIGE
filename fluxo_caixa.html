@@ -33,15 +33,22 @@
       </div>
 
       <div class="mb-3">
-        <div class="input-group w-50">
-          <select id="filtroPeriodo" class="form-select">
+        <div class="d-flex align-items-center w-50">
+          <select id="filtroPeriodo" class="form-select me-2">
             <option value="all">Todos</option>
             <option value="day">Dia</option>
             <option value="week">Semana</option>
             <option value="month">Mês</option>
           </select>
-          <span id="subFiltro" class="d-none"></span>
-          <input type="search" id="tabelaFluxoSearch" class="form-control" placeholder="Pesquisar">
+          <span id="subFiltro" class="d-none me-2"></span>
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="searchDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              Pesquisar
+            </button>
+            <div class="dropdown-menu p-3" aria-labelledby="searchDropdown">
+              <input type="search" id="tabelaFluxoSearch" class="form-control" placeholder="Pesquisar">
+            </div>
+          </div>
         </div>
       </div>
 
