@@ -34,10 +34,8 @@
             </div>
             <div class="mb-3">
               <label for="produtoVenda" class="form-label">Produto/Serviço</label>
-              <input type="text" class="form-control mb-2" id="produtoSearch" placeholder="Pesquisar produto">
-              <select class="form-select" id="produtoVenda" required>
-                <option value="">Selecione um produto</option>
-              </select>
+              <input type="text" class="form-control" id="produtoVenda" list="produtosList" placeholder="Digite ou selecione o produto" required>
+              <datalist id="produtosList"></datalist>
             </div>
             <div class="mb-3 d-none" id="servicoDescricaoDiv">
               <label for="descricaoServico" class="form-label">Descrição do Serviço</label>
@@ -80,42 +78,30 @@
         clienteList.appendChild(option);
       });
 
-      const produtoSelect = document.getElementById('produtoVenda');
+      const produtoInput = document.getElementById('produtoVenda');
+      const produtoList = document.getElementById('produtosList');
       produtosDB.forEach(p => {
         const option = document.createElement('option');
-        option.value = p.id;
-        option.textContent = p.nome;
+        option.value = p.nome;
+        option.dataset.id = p.id;
         option.dataset.preco = p.preco;
-        produtoSelect.appendChild(option);
-      });
-      const servicoOption = document.createElement('option');
-      servicoOption.value = 'servico';
-      servicoOption.textContent = 'Adicionar Serviço';
-      produtoSelect.appendChild(servicoOption);
-
-      const produtoSearch = document.getElementById('produtoSearch');
-      produtoSearch.addEventListener('input', function() {
-        const termo = this.value.toLowerCase();
-        Array.from(produtoSelect.options).forEach(opt => {
-          if (!opt.value) return;
-          opt.hidden = !opt.textContent.toLowerCase().includes(termo);
-        });
+        produtoList.appendChild(option);
       });
 
       const valorInput = document.getElementById('valorVenda');
       const descDiv = document.getElementById('servicoDescricaoDiv');
       const descInput = document.getElementById('descricaoServico');
 
-      produtoSelect.addEventListener('change', function() {
-        if (this.value === 'servico') {
+      produtoInput.addEventListener('input', function() {
+        const prod = produtosDB.find(p => p.nome.toLowerCase() === this.value.toLowerCase());
+        if (prod) {
+          descDiv.classList.add('d-none');
+          descInput.required = false;
+          valorInput.value = prod.preco;
+        } else {
           descDiv.classList.remove('d-none');
           descInput.required = true;
           valorInput.value = '';
-        } else {
-          descDiv.classList.add('d-none');
-          descInput.required = false;
-          const prod = produtosDB.find(p => p.id == this.value);
-          valorInput.value = prod ? prod.preco : '';
         }
       });
 
