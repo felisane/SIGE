@@ -29,10 +29,8 @@
             </div>
             <div class="mb-3">
               <label for="clienteVenda" class="form-label">Cliente</label>
-              <input type="text" class="form-control mb-2" id="clienteSearch" placeholder="Pesquisar cliente">
-              <select class="form-select" id="clienteVenda" required>
-                <option value="">Selecione um cliente</option>
-              </select>
+              <input type="text" class="form-control" id="clienteVenda" list="clientesList" placeholder="Digite o nome do cliente" required>
+              <datalist id="clientesList"></datalist>
             </div>
             <div class="mb-3">
               <label for="produtoVenda" class="form-label">Produto/Serviço</label>
@@ -74,12 +72,12 @@
   <script src="db.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const clienteSelect = document.getElementById('clienteVenda');
+      const clienteList = document.getElementById('clientesList');
       clientesDB.forEach(c => {
         const option = document.createElement('option');
-        option.value = c.id;
-        option.textContent = c.nome;
-        clienteSelect.appendChild(option);
+        option.value = c.nome;
+        option.dataset.id = c.id;
+        clienteList.appendChild(option);
       });
 
       const produtoSelect = document.getElementById('produtoVenda');
@@ -94,15 +92,6 @@
       servicoOption.value = 'servico';
       servicoOption.textContent = 'Adicionar Serviço';
       produtoSelect.appendChild(servicoOption);
-
-      const clienteSearch = document.getElementById('clienteSearch');
-      clienteSearch.addEventListener('input', function() {
-        const termo = this.value.toLowerCase();
-        Array.from(clienteSelect.options).forEach(opt => {
-          if (!opt.value) return;
-          opt.hidden = !opt.textContent.toLowerCase().includes(termo);
-        });
-      });
 
       const produtoSearch = document.getElementById('produtoSearch');
       produtoSearch.addEventListener('input', function() {
