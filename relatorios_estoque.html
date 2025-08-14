@@ -51,24 +51,91 @@
               <td>100</td>
               <td>80</td>
               <td>20</td>
-              <td>Entrada: 01/08/2025; Saída: 05/08/2025</td>
+              <td data-search="Entrada: 01/08/2025; Saída: 05/08/2025">
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#historicoProdutoX">Ver Histórico</button>
+              </td>
             </tr>
             <tr>
               <td>Produto Y</td>
               <td>60</td>
               <td>45</td>
               <td>15</td>
-              <td>Entrada: 02/08/2025; Saída: 10/08/2025</td>
+              <td data-search="Entrada: 02/08/2025; Saída: 10/08/2025">
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#historicoProdutoY">Ver Histórico</button>
+              </td>
             </tr>
             <tr>
               <td>Produto Z</td>
               <td>30</td>
               <td>50</td>
               <td>0</td>
-              <td>Entrada: 03/08/2025; Entrada: 15/08/2025</td>
+              <td data-search="Entrada: 03/08/2025; Entrada: 15/08/2025">
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#historicoProdutoZ">Ver Histórico</button>
+              </td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals de Histórico -->
+  <div class="modal fade" id="historicoProdutoX" tabindex="-1" aria-labelledby="historicoProdutoXLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="historicoProdutoXLabel">Histórico - Produto X</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="mb-0">
+            <li>Entrada: 01/08/2025</li>
+            <li>Saída: 05/08/2025</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="historicoProdutoY" tabindex="-1" aria-labelledby="historicoProdutoYLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="historicoProdutoYLabel">Histórico - Produto Y</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="mb-0">
+            <li>Entrada: 02/08/2025</li>
+            <li>Saída: 10/08/2025</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="historicoProdutoZ" tabindex="-1" aria-labelledby="historicoProdutoZLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="historicoProdutoZLabel">Histórico - Produto Z</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="mb-0">
+            <li>Entrada: 03/08/2025</li>
+            <li>Entrada: 15/08/2025</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
       </div>
     </div>
   </div>
