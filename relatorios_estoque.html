@@ -39,29 +39,33 @@
           <thead class="table-light">
             <tr>
               <th>Produto</th>
-              <th>Tipo</th>
-              <th>Quantidade</th>
-              <th>Data</th>
+              <th>Estoque Inicial</th>
+              <th>Estoque Atual</th>
+              <th>Saídas</th>
+              <th>Histórico</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Produto X</td>
-              <td>Entrada</td>
-              <td>50</td>
-              <td>01/08/2025</td>
+              <td>100</td>
+              <td>80</td>
+              <td>20</td>
+              <td>Entrada: 01/08/2025; Saída: 05/08/2025</td>
             </tr>
             <tr>
               <td>Produto Y</td>
-              <td>Saída</td>
-              <td>10</td>
-              <td>02/08/2025</td>
+              <td>60</td>
+              <td>45</td>
+              <td>15</td>
+              <td>Entrada: 02/08/2025; Saída: 10/08/2025</td>
             </tr>
             <tr>
               <td>Produto Z</td>
-              <td>Entrada</td>
               <td>30</td>
-              <td>03/08/2025</td>
+              <td>50</td>
+              <td>0</td>
+              <td>Entrada: 03/08/2025; Entrada: 15/08/2025</td>
             </tr>
           </tbody>
         </table>
@@ -94,9 +98,11 @@
           return true;
         }
 
-        const dataStr = data[3];
-        const [d, m, a] = dataStr.split('/').map(Number);
-        const dataMov = new Date(a, m - 1, d);
+        const datas = (data[4].match(/\d{2}\/\d{2}\/\d{4}/g) || [])
+          .map(str => {
+            const [d, m, a] = str.split('/').map(Number);
+            return new Date(a, m - 1, d);
+          });
 
         const hoje = new Date();
         let inicio, fim;
@@ -123,7 +129,7 @@
             return true;
         }
 
-        return dataMov >= inicio && dataMov < fim;
+        return datas.some(d => d >= inicio && d < fim);
       });
 
       const tabela = $('#tabelaEstoque').DataTable({
